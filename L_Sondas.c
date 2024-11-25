@@ -80,12 +80,6 @@ TSonda* Calculo_sonda_prox(Lista_s *lista_sonda, Trocha *rocha) {
     sondaProx->capacidade = sondaProx->capacidade - rocha->peso;
 
     Move(sondaProx, rocha->latitude, rocha->longitude);
-    printf("\n");
-    printf("\n++++ Coleta realizada com sucesso! ++++\n");
-    printf("Sonda: %d\n", sondaProx->Identificador);
-    printf("Rocha coletada: %s, Peso: %.2f\n", rocha->categoria, rocha->peso);
-    printf("Nova posicao da sonda: (%.2f, %.2f)\n", sondaProx->Latitude, sondaProx->Longitude);
-    printf("\n");
     
     return sondaProx;
 }
@@ -155,6 +149,7 @@ void voltarRocha(TSonda* sonda, TLista* temp_lista, float media){
 }
 
 void OperacaoE(Lista_s* lista_sonda){
+    printf("\n++++++++++++++++++++OPERACAO_E++++++++++++++++++++\n");
     float media;
     Celula_s* pAux;
     pAux = lista_sonda->pPrimeiro_s->pProx;
@@ -199,7 +194,6 @@ void OperacaoE(Lista_s* lista_sonda){
           
     }
 
-    printf("\n\nMEDIA: %.2f\n\n", media);
 
 }
 
@@ -226,8 +220,6 @@ void Operacao_i(Lista_s *lista_sonda){
         TSonda* sonda_2 = &pAux->item;
         printf("\n======================================\n");
         printf("\nID: %d\n", sonda_2->Identificador);
-        printf("Localizacao:(%.2f,%.2f)\n",sonda_2->Latitude,sonda_2->Longitude);
-        printf("CAPACIDADE:(%.2f)\n", sonda_2->capacidade);
         printf("\n");
                 
         if(LEHVazia(&sonda_2->compartimento)){

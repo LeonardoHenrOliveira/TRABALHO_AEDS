@@ -44,7 +44,7 @@ if (escolha == 1) {
     FILE *arquivo = fopen("arquivo.txt", "r");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.\n");
-        return 1; // Sai do programa se o arquivo não for encontrado
+        return 1; 
     }
 
     int quntdsondas, quntdoperacoes;
@@ -53,11 +53,11 @@ if (escolha == 1) {
         fclose(arquivo);
         return 1;
     }
-    fgetc(arquivo); // Consome a quebra de linha após o número
+    fgetc(arquivo); 
 
     FLVazia_s(&lista_sonda);
 
-    // Leitura das sondas
+    
     for (int k = 0; k < quntdsondas; k++) {
         float lat, lon, capacidade, velocidade, combustivel;
         if (fscanf(arquivo, "%f %f %f %f %f", &lat, &lon, &capacidade, &velocidade, &combustivel) != 5) {
@@ -65,34 +65,30 @@ if (escolha == 1) {
             fclose(arquivo);
             return 1;
         }
-        fgetc(arquivo); // Consome a quebra de linha
+        fgetc(arquivo); 
         TSonda Nsonda;
         Inicializar_sonda(&Nsonda, lat, lon, capacidade);
         LInsere_s(&lista_sonda, &Nsonda);
     }
 
-    // Leitura da quantidade de operações
     if (fscanf(arquivo, "%d", &quntdoperacoes) != 1) {
         printf("Erro ao ler a quantidade de operações.\n");
         fclose(arquivo);
         return 1;
     }
-    fgetc(arquivo); // Consome a quebra de linha após o número
+    fgetc(arquivo); 
 
     char operacao;
-    int l = 0; // Contador de minerais diferentes
+     
 
-    // Processamento das operações
     for (int i = 0; i < quntdoperacoes; i++) {
-        printf("OPERACAO %d de %d\n", i + 1, quntdoperacoes);
 
-        // Lê a operação
         if (fscanf(arquivo, " %c", &operacao) != 1) {
             printf("Erro ao ler a operação.\n");
             break;
         }
-        fgetc(arquivo); // Consome a quebra de linha após a operação
-
+        fgetc(arquivo); 
+        int l = 0;
         if (operacao == 'R') {
             float latitude, longitude;
             int peso;
@@ -101,49 +97,45 @@ if (escolha == 1) {
                 printf("Erro ao ler dados da rocha (latitude, longitude, peso).\n");
                 break;
             }
-            fgetc(arquivo); // Consome a quebra de linha
+            fgetc(arquivo); 
 
             char minerais_entrada[255];
             if (fgets(minerais_entrada, sizeof(minerais_entrada), arquivo) == NULL) {
                 printf("Erro ao ler os minerais da rocha.\n");
                 break;
             }
-            minerais_entrada[strcspn(minerais_entrada, "\r\n")] = '\0'; // Remove \r ou \n
+            minerais_entrada[strcspn(minerais_entrada, "\r\n")] = '\0'; 
 
-            // Processa minerais e classifica rocha
             char *token = strtok(minerais_entrada, " ");
             Trocha rnova;
             Trocha rocha;
+            L_entrada lista_e;
+            FLvazia_e(&lista_e);
             while (token != NULL) {
                 if (strlen(token) > 0) {
                     entradaminerais entradam;
                     entradaminerais m1 = InicializarMinerale(&entradam, token);
-                    LInsere_e(&lista_e, m1); // Adiciona mineral na lista de entrada
 
-                    classifica_categoria(&lista_e, &rnova, l); // Classifica os minerais
-                    printf("\neeee%s\n", lista_m.item[i].Nome);
-                    // Limpa lista de minerais
-                    Lretira_e(&lista_e);
+                    LInsere_e(&lista_e, m1); 
 
-                    // Atualiza a rocha com minerais classificados
-                    rocha = InicializaRocha(&rnova, 1, peso, latitude, longitude);
-
-
-                    l++; // Incrementa contador de minerais diferentes
+                    l++; 
                 }
 
 
-                token = strtok(NULL, " "); // Avança para o próximo mineral
+                token = strtok(NULL, " "); 
             }
-            printf("\n%s\n", lista_m.item[i].Nome);
-            TSonda *sonda = Calculo_sonda_prox(&lista_sonda, &rocha); // Calcula sonda mais próxima
-            LInsere(&sonda->compartimento, &rocha); // Insere a rocha na sonda
+            classifica_categoria(&lista_e, &rnova, l); 
+            rocha = InicializaRocha(&rnova, 1, peso, latitude, longitude);
+            Lretira_e(&lista_e);
+            TSonda *sonda = Calculo_sonda_prox(&lista_sonda, &rocha); 
+            LInsere(&sonda->compartimento, &rocha); 
             printf("Rocha inserida na sonda.\n");
 
+
         } else if (operacao == 'I') {
-            Operacao_i(&lista_sonda); // Processa operação de inserção
+            Operacao_i(&lista_sonda); 
         } else if (operacao == 'E') {
-            OperacaoE(&lista_sonda); // Processa operação de exibição
+            OperacaoE(&lista_sonda); 
         } else {
             printf("Operação inválida no arquivo.\n");
         }
