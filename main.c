@@ -3,17 +3,6 @@
 #include <string.h>
 #include "Menu.h"
 
-void EsvaziaListaE(L_entrada *lista_e) {
-    if (lista_e == NULL) {
-        printf("A lista não foi inicializada.\n");
-        return;
-    }
-
-    lista_e->ultimoe = 0; // Redefine o índice do último elemento para 0, esvaziando a lista
-    printf("ListaE esvaziada com sucesso.\n");
-}
-
-
 int main() {
     
     int quntdsondas, quntdoperacoes, i,peso, contador=0,j=0,k,escolha;
@@ -115,9 +104,7 @@ if (escolha == 1) {
                 if (strlen(token) > 0) {
                     entradaminerais entradam;
                     entradaminerais m1 = InicializarMinerale(&entradam, token);
-
                     LInsere_e(&lista_e, m1); 
-
                     l++; 
                 }
 

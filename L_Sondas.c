@@ -85,19 +85,6 @@ TSonda* Calculo_sonda_prox(Lista_s *lista_sonda, Trocha *rocha) {
 }
 
 
-int ContemCategoria(TSonda *sonda, const char *categoria, float pesoMinimo) {
-    Tcelula *pAux = sonda->compartimento.pPrimeiro->pProx;
-    while (pAux != NULL) {
-        if (strcmp(pAux->rocha.categoria, categoria) == 0 && pAux->rocha.peso < pesoMinimo) {
-            return 1;
-        }
-        pAux = pAux->pProx;
-    }
-
-    return 0;
-}
-
-
 float MediaSondas(Lista_s* lista_sonda){
     float media = 0.0;
     int qnt = 0;

@@ -31,6 +31,5 @@ void OperacaoE(Lista_s* lista_sonda);
 void RedistribuirSondas(Lista_s* lista_Sonda);
 float MediaSondas(Lista_s* lista_sonda);
 void PosicaoInicial(Lista_s* lista_sonda);
-int ContemCategoria(TSonda *sonda, const char *categoria, float pesoMinimo);
 
 TSonda* Calculo_sonda_prox(Lista_s *lista_sonda, Trocha *rocha);
